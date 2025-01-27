@@ -23,3 +23,13 @@ def QBackend(qc, shots=500):
         counts = pub_result.data.c.get_counts()
         print(f"Counts: {counts}")
         return counts
+
+from qiskit import transpile
+from qiskit_aer import Aer
+
+def QSimulator(qc, shots=500):
+    backend = Aer.get_backend('qasm_simulator')
+    qc = transpile(qc, backend)
+    result = backend.run(qc, shots=shots).result()
+    counts = result.get_counts(qc)
+    return counts
